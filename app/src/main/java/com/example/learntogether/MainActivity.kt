@@ -5,21 +5,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -34,8 +28,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LearnTogetherTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    ComposeArticle(
+                        titre = stringResource(R.string.jetpack_compose_titre),
+                        resume = stringResource(R.string.jetpack_compose_resume),
+                        description = stringResource(R.string.jetpack_compose_description)
+                    )
                 }
             }
         }
@@ -43,44 +44,47 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun LearnTogetherText1(text: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Jetpack Compose tutorial",
-        fontSize = 24.sp,
-        modifier = Modifier.padding(16.dp),
+fun ComposeArticle(
+    titre: String,
+    resume: String,
+    description: String,
+    modifier: Modifier = Modifier
+) {
 
-    )
-}
-@Composable
-fun LearnTogetherText2(text: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Jetpack Compose is a modern toolkit for building native Android UI. " +
-                "Compose simplifies and accelerates UI development on Android with less code, " +
-                "powerful tools, and intuitive Kotlin APIs.",
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+    val image = painterResource(R.drawable.bg_compose_background)
 
-        )
-}
-
-
-@Composable
-fun LearnTogetherImage(name: String, modifier: Modifier = Modifier) {
-    val image = painterResource(R.drawable.)
-    Box {
+    Column(modifier = modifier) {
         Image(
             painter = image,
             contentDescription = null,
-            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxWidth()
         )
-
+        Text(
+            text = titre,
+            fontSize = 24.sp,
+            modifier = Modifier.padding(16.dp)
+        )
+        Text(
+            text = resume,
+            textAlign = TextAlign.Justify,
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+        )
+        Text(
+            text = description,
+            textAlign = TextAlign.Justify,
+            modifier = Modifier.padding(16.dp)
+        )
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LearnTogetherPreview() {
     LearnTogetherTheme {
-        LearnTogetherText1(),
-        learnTogetherText2(),
+        ComposeArticle(
+            titre = stringResource(R.string.jetpack_compose_titre),
+            resume = stringResource(R.string.jetpack_compose_resume),
+            description = stringResource(R.string.jetpack_compose_description)
+        )
     }
 }
